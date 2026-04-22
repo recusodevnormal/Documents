@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Service: httpd
 # depends: network logger
 # ready: tcp:8080
 # ready_timeout: 5
 # cgroup.memory.max: 32M
 # Enhanced HTTP server with health check endpoint
+
+set -euo pipefail
 
 PORT="${HTTP_PORT:-8080}"
 DOC_ROOT="${HTTP_ROOT:-/var/www}"

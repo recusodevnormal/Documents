@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Minimal PID 1 init for initramfs / direct boot
 # Supervises services written in Bash. Reaps zombies, restarts services,
 # handles SIGTERM gracefully, and supports simple dependency ordering.

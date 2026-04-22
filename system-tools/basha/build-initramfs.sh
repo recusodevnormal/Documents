@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Build an Alpine-based initramfs cpio.gz with Bash PID 1 and service scripts.
 # Uses the Alpine minirootfs as the musl+BusyBox base and drops in a static
 # bash binary so complex supervisor scripts work without chasing glibc libs.

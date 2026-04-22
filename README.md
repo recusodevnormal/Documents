@@ -2,6 +2,14 @@
 
 A comprehensive collection of single-file Bash scripts for games, AI/NLP tools, system utilities, and general-purpose utilities.
 
+## Recent Improvements
+
+All scripts have been standardized with the following improvements:
+- **Portable shebang**: Changed from `#!/bin/bash` to `#!/usr/bin/env bash` for better cross-system compatibility
+- **Strict error handling**: Added `set -euo pipefail` to catch errors early and prevent silent failures
+- **Cleanup traps**: Added proper cleanup functions with EXIT/INT/TERM traps to restore terminal state
+- **Terminal capability detection**: Improved color handling with tput detection for graceful degradation on unsupported terminals
+
 ## Directory Structure
 
 ```

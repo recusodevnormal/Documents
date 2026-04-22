@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Install/update GRUB entry for Minimal Bash OS.
 # Must be run as root on the target machine (or in a chroot).
 

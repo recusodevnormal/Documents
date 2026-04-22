@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Service: console
 # depends: network
 # ready: sleep:1
 # Minimal console getty replacement for Alpine terminal OS.
+
+set -euo pipefail
 # Spawns an interactive login shell on /dev/console.
 # Works offline; no network required.
 

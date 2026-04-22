@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Self-sustained Alpine Terminal OS VM launcher.
 # Usage: ./vm.sh
 #   - Stages the host kernel into ./vmlinuz if not present

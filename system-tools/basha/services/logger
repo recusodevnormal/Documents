@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Service: logger
 # depends: network
 # ready: file:/var/log/messages
 # ready_timeout: 3
 # Minimal syslog-like logger: reads from a named pipe and writes to /var/log/messages
+
+set -euo pipefail
 
 LOG_FILE="/var/log/messages"
 PIPE="/var/log/logpipe"

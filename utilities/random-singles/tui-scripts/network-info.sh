@@ -1,6 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Network Info TUI - No external dependencies
 # Works with standard Alpine Linux busybox
+
+set -euo pipefail
+
+# Cleanup on exit
+cleanup() {
+    show_cursor
+    clear_screen
+}
+trap cleanup EXIT INT TERM
 
 # Terminal control
 clear_screen() {
@@ -19,16 +28,28 @@ show_cursor() {
     printf '\033[?25h'
 }
 
-# Colors
-RED='\033[31m'
-GREEN='\033[32m'
-YELLOW='\033[33m'
-BLUE='\033[34m'
-MAGENTA='\033[35m'
-CYAN='\033[36m'
-WHITE='\033[37m'
-BOLD='\033[1m'
-RESET='\033[0m'
+# Colors with terminal capability detection
+if command -v tput >/dev/null 2>&1 && [ -t 1 ]; then
+    RED=$(tput setaf 1)
+    GREEN=$(tput setaf 2)
+    YELLOW=$(tput setaf 3)
+    BLUE=$(tput setaf 4)
+    MAGENTA=$(tput setaf 5)
+    CYAN=$(tput setaf 6)
+    WHITE=$(tput setaf 7)
+    BOLD=$(tput bold)
+    RESET=$(tput sgr0)
+else
+    RED='\033[31m'
+    GREEN='\033[32m'
+    YELLOW='\033[33m'
+    BLUE='\033[34m'
+    MAGENTA='\033[35m'
+    CYAN='\033[36m'
+    WHITE='\033[37m'
+    BOLD='\033[1m'
+    RESET='\033[0m'
+fi
 
 # Get network interfaces
 get_interfaces() {

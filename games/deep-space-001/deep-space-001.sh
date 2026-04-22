@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ==============================================================================
 # DEEP SPACE SCAVENGER - TUI DASHBOARD
 # A single-file Bash RPG.
 # ==============================================================================
+
+set -euo pipefail
 
 # --- CONFIGURATION & CONSTANTS ---
 readonly SCREEN_WIDTH=80

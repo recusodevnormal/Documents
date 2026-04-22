@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Service: network
 # depends: 
 # ready: cmd:"ip link show lo | grep -q UP"
 # ready_timeout: 5
 # Minimal network bring-up. Works fully offline — loopback is always available.
 # If an ethernet interface exists it is brought up; DHCP is attempted but never fatal.
+
+set -euo pipefail
 
 iface="${NET_IFACE:-eth0}"
 
