@@ -23,6 +23,8 @@ readonly TEMP_DIR="/tmp/markov_$$"
 readonly CHAIN_FILE="${TEMP_DIR}/chain.dat"
 readonly WORDS_FILE="${TEMP_DIR}/words.dat"
 readonly STARTS_FILE="${TEMP_DIR}/starts.dat"
+readonly MODEL_DIR="${HOME}/.local/share/markov_models"
+readonly CURRENT_MODEL="${TEMP_DIR}/current_model.name"
 
 # Colors for terminal UI
 readonly C_RESET='\033[0m'
@@ -231,6 +233,8 @@ show_menu() {
     echo "  [10] Generate 10 sentences"
     echo "  [C] Continuous mode (keep generating)"
     echo "  [S] Show statistics"
+    echo "  [V] Save model to file"
+    echo "  [L] Load model from file"
     echo "  [Q] Quit"
     echo
 }
@@ -256,6 +260,145 @@ show_statistics() {
         awk '{printf "  %5d × %s\n", $1, substr($0, index($0,$2))}'
     echo
     
+    print_color "$C_CYAN" "Press Enter to continue..."
+    read -r
+}
+
+# Save current model to persistent storage
+save_model() {
+    mkdir -p "$MODEL_DIR"
+    
+    print_header
+    print_color "$C_BOLD$C_YELLOW" "Save Model"
+    echo
+    
+    # Show existing models
+    if [[ -d "$MODEL_DIR" && -n "$(ls -A "$MODEL_DIR" 2>/dev/null)" ]]; then
+        print_color "$C_CYAN" "Existing models:"
+        ls -1 "$MODEL_DIR"/*.markov 2>/dev/null | while read -r f; do
+            local name=$(basename "$f" .markov)
+            local size=$(du -h "$f" | cut -f1)
+            echo "  • $name ($size)"
+        done
+        echo
+    fi
+    
+    printf "%s" "$(print_color "$C_GREEN" "Enter model name: ")"
+    read -r model_name
+    
+    if [[ -z "$model_name" ]]; then
+        print_color "$C_RED" "Model name cannot be empty."
+        sleep 1
+        return
+    fi
+    
+    # Sanitize model name
+    model_name=$(echo "$model_name" | tr -cd 'a-zA-Z0-9_-')
+    
+    if [[ -z "$model_name" ]]; then
+        print_color "$C_RED" "Invalid model name."
+        sleep 1
+        return
+    fi
+    
+    local model_file="${MODEL_DIR}/${model_name}.markov"
+    
+    # Save model (chain, starts, and metadata)
+    {
+        echo "# Markov Model: $model_name"
+        echo "# Created: $(date)"
+        echo "# Chain order: $CHAIN_ORDER"
+        echo "#"
+        echo "# Format: CHAIN|state|next_word or START|word"
+        cat "$CHAIN_FILE"
+        echo "# STARTS"
+        cat "$STARTS_FILE"
+    } > "$model_file"
+    
+    # Save current model name
+    echo "$model_name" > "$CURRENT_MODEL"
+    
+    print_color "$C_GREEN" "✓ Model saved: $model_name"
+    echo
+    print_color "$C_CYAN" "Press Enter to continue..."
+    read -r
+}
+
+# Load model from persistent storage
+load_model() {
+    print_header
+    print_color "$C_BOLD$C_YELLOW" "Load Model"
+    echo
+    
+    if [[ ! -d "$MODEL_DIR" ]] || [[ -z "$(ls -A "$MODEL_DIR" 2>/dev/null)" ]]; then
+        print_color "$C_RED" "No saved models found."
+        echo
+        print_color "$C_CYAN" "Press Enter to continue..."
+        read -r
+        return
+    fi
+    
+    print_color "$C_CYAN" "Available models:"
+    local i=1
+    ls -1 "$MODEL_DIR"/*.markov 2>/dev/null | while read -r f; do
+        local name=$(basename "$f" .markov)
+        local size=$(du -h "$f" | cut -f1)
+        local date=$(stat -c %y "$f" 2>/dev/null | cut -d' ' -f1 || stat -f %Sm "$f" 2>/dev/null | cut -d' ' -f1 || echo "unknown")
+        printf "  [%d] %s (%s, %s)\n" "$i" "$name" "$size" "$date"
+        i=$((i + 1))
+    done
+    echo
+    
+    printf "%s" "$(print_color "$C_GREEN" "Enter model name or number: ")"
+    read -r model_input
+    
+    if [[ -z "$model_input" ]]; then
+        return
+    fi
+    
+    # Handle numeric input
+    local model_file=""
+    if [[ "$model_input" =~ ^[0-9]+$ ]]; then
+        model_file=$(ls -1 "$MODEL_DIR"/*.markov 2>/dev/null | sed -n "${model_input}p")
+    else
+        model_file="${MODEL_DIR}/${model_input}.markov"
+    fi
+    
+    if [[ ! -f "$model_file" ]]; then
+        print_color "$C_RED" "Model not found: $model_input"
+        sleep 1
+        return
+    fi
+    
+    # Clear existing chain and starts
+    > "$CHAIN_FILE"
+    > "$STARTS_FILE"
+    
+    # Load model data
+    local in_starts=0
+    while IFS= read -r line; do
+        # Skip comments and empty lines
+        [[ "$line" =~ ^# ]] && continue
+        [[ -z "$line" ]] && continue
+        
+        if [[ "$line" == "# STARTS" ]]; then
+            in_starts=1
+            continue
+        fi
+        
+        if [[ $in_starts -eq 1 ]]; then
+            echo "$line" >> "$STARTS_FILE"
+        else
+            echo "$line" >> "$CHAIN_FILE"
+        fi
+    done < "$model_file"
+    
+    # Save current model name
+    local model_name=$(basename "$model_file" .markov)
+    echo "$model_name" > "$CURRENT_MODEL"
+    
+    print_color "$C_GREEN" "✓ Model loaded: $model_name"
+    echo
     print_color "$C_CYAN" "Press Enter to continue..."
     read -r
 }
@@ -312,6 +455,12 @@ interactive_mode() {
                 ;;
             S)
                 show_statistics
+                ;;
+            V)
+                save_model
+                ;;
+            L)
+                load_model
                 ;;
             Q)
                 print_color "$C_GREEN" "Goodbye!"
