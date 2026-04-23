@@ -3,6 +3,12 @@
 # No networking required. Self-contained.
 # Usage: sh kira.sh
 
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
+
 # Find python3
 PY=""
 for cmd in python3 python; do

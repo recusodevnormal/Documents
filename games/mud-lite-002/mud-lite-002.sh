@@ -5,7 +5,8 @@
 # A single-file Bash adventure game with a text-based user interface
 ################################################################################
 
-set -eo pipefail
+set -euo pipefail
+IFS=$'\n\t'
 
 # Trap to ensure terminal is restored on exit
 trap cleanup EXIT INT TERM

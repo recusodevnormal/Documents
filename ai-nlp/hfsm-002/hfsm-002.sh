@@ -6,7 +6,7 @@
 # No external dependencies whatsoever.
 # =============================================================================
 
-set -uo pipefail
+set -euo pipefail
 
 # ----------------------------- State Definitions -----------------------------
 readonly STATE_INITIAL="INITIAL"
@@ -115,7 +115,7 @@ while true; do
             case "$choice" in
                 1)
                     printf "Best practice: Always start scripts with:\n"
-                    printf "set -uo pipefail\n"
+                    printf "set -euo pipefail\n"
                     printf "and use readonly for constants.\n"
                     ;;
                 2)

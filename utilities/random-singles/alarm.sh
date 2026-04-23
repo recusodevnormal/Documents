@@ -13,6 +13,7 @@
 # https://github.com/wolandark/BASH_Scripts_For_Everyone
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # Check dependencies
 check_dependencies() {

@@ -8,10 +8,19 @@
 #  Uses Bash's built-in regex engine ([[ $input =~ $pattern ]]) to capture
 #  groups. No external dependencies — only standard GNU/Unix utilities.
 #
+#  DEPENDENCIES: bash (>=4), sed, awk, grep, printf, tr, cut, wc
+#               All standard GNU/Unix utilities. No network access.
+#
 #  Usage:
 #      ./slot_filler.sh                              # interactive mode
 #      ./slot_filler.sh "Move backup.tar to /tmp"    # one-shot mode
 #
+
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  Terminal Colours

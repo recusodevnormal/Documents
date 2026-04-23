@@ -31,6 +31,7 @@
 # Strict mode — catch errors early
 # ---------------------------------------------------------------------------
 set -euo pipefail
+IFS=$'\n\t'
 
 # ---------------------------------------------------------------------------
 # ANSI colour / style helpers (gracefully degrade if no colour support)

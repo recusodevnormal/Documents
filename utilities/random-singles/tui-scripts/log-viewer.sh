@@ -3,6 +3,7 @@
 # Works with standard Alpine Linux busybox
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # Cleanup on exit
 cleanup() {

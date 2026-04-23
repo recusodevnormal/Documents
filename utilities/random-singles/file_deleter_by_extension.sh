@@ -12,6 +12,7 @@
 #          ./file_deleter_by_extension.sh .so ~/Downloads --dry-run
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # Parse arguments
 EXTENSION="${1:-.so}"

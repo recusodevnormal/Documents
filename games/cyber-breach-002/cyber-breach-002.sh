@@ -5,6 +5,7 @@
 # Pure bash implementation
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # ============================================================================
 # ANSI COLOR CODES & TUI UTILITIES

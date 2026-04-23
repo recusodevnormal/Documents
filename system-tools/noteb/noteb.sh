@@ -3,7 +3,8 @@
 # No network required. Self-contained. Busybox-compatible.
 # Usage: ./noteb.sh <command> [args...]   or   ./noteb.sh menu
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 VERSION="1.0.0"
 APP_NAME="noteb"

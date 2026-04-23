@@ -7,6 +7,11 @@
 # https://github.com/wolandark
 # https://github.com/wolandark/BASH_Scripts_For_Everyone
 
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 symbols=("@" "#" "&")
 values=(10 20 30)

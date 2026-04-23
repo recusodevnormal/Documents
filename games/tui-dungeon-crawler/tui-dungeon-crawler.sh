@@ -6,6 +6,7 @@
 
 # --- Strict mode & cleanup ---------------------------------------------------
 set -euo pipefail
+IFS=$'\n\t'
 
 # Terminal state
 _ORIGINAL_STTY=""

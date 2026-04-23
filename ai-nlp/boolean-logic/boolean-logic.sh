@@ -22,6 +22,7 @@
 # =============================================================================
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # --- Configuration -----------------------------------------------------------
 readonly KB_MARKER='__KB_BEGIN__'   # Sentinel that marks the start of KB data

@@ -2,7 +2,18 @@
 # =============================================================================
 #  DEEP SPACE SCAVENGER - TUI Dashboard
 #  A full space RPG in one Bash script
+#
+# DEPENDENCIES: bash, tput, stty
+#               All standard GNU/Unix utilities. No network access.
+#
+# USAGE:  chmod +x deep-space-002.sh && ./deep-space-002.sh
 # =============================================================================
+
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 trap 'tput reset; stty sane; echo -e "\nThanks for playing Deep Space Scavenger." ; exit 0' EXIT INT TERM
 

@@ -13,6 +13,7 @@
 ################################################################################
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # Configuration
 readonly SCRIPT_NAME="$(basename "$0")"

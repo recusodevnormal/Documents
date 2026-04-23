@@ -3,7 +3,18 @@
 # Regex-Based Slot Filler (NER Lite)
 # A lightweight, deterministic named entity recognizer for file commands
 # Uses only standard GNU/Unix tools + Bash built-ins
+#
+# DEPENDENCIES: bash (>=4), sed, printf, read
+#               All standard GNU/Unix utilities. No network access.
+#
+# USAGE:  chmod +x slot-filler-002.sh && ./slot-filler-002.sh
 # =============================================================================
+
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 # Enable case-insensitive matching for regex
 shopt -s nocasematch

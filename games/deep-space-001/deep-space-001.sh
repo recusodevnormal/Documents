@@ -6,6 +6,7 @@
 # ==============================================================================
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # --- CONFIGURATION & CONSTANTS ---
 readonly SCREEN_WIDTH=80

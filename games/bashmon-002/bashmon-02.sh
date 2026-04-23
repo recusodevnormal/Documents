@@ -2,7 +2,18 @@
 # =============================================================================
 # BASHMON: TUI Monster Tamer
 # A single-file Bash RPG with ASCII monsters, turn-based combat, and TUI
+#
+# DEPENDENCIES: bash, tput, stty
+#               All standard GNU/Unix utilities. No network access.
+#
+# USAGE:  chmod +x bashmon-02.sh && ./bashmon-02.sh
 # =============================================================================
+
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 # --- Terminal Setup & Cleanup ------------------------------------------------
 setup_terminal() {

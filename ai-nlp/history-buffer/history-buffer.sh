@@ -6,7 +6,26 @@
 # A pseudo-intelligent offline script that remembers the last N topics discussed.
 # If the user types "tell me more", it looks at the circular buffer to determine
 # what "it" refers to, providing conversational continuity.
+#
+# DEPENDENCIES: bash (>=4), grep, sed, tr, printf, read
+#               All standard GNU/Unix utilities. No network access.
+#
+# USAGE:  chmod +x history-buffer.sh && ./history-buffer.sh
 # ==============================================================================
+
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
+
+# ---------------------------------------------------------------------------
+# BASH VERSION CHECK
+# ---------------------------------------------------------------------------
+if [[ "${BASH_VERSINFO[0]}" -lt 4 ]]; then
+    printf "Error: Bash 4.0 or higher required for associative arrays\n" >&2
+    exit 1
+fi
 
 # --- Configuration ---
 N=3 # Size of the circular memory buffer (remembers last 3 topics)

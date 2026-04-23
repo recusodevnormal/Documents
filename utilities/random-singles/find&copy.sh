@@ -11,6 +11,7 @@
 # Example: ./find&copy.sh ~/Scripts file_list.txt ~/FOUNDFILES
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # Parse arguments
 SEARCH_PATH="${1:-~/Scripts/BASH_Scripts_For_Everyone}"

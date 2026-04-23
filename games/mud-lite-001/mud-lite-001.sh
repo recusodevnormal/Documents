@@ -7,7 +7,8 @@
 # =============================================================================
 
 # ─── Terminal / Safety Setup ──────────────────────────────────────────────────
-set -o nounset
+set -euo pipefail
+IFS=$'\n\t'
 
 SAVE_FILE="/tmp/.mud_save_$$"
 LOG_FILE="/tmp/.mud_log_$$"

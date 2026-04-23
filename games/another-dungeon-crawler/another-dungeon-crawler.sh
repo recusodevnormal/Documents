@@ -1,9 +1,17 @@
-```bash
 #!/usr/bin/env bash
 # The TUI Dungeon Crawler - A Rogue-lite RPG in Pure Bash
 # Use arrow keys to move, 'i' for inventory, 'q' to quit
+#
+# DEPENDENCIES: bash, stty, tput, clear
+#               All standard GNU/Unix utilities. No network access.
+#
+# USAGE:  chmod +x another-dungeon-crawler.sh && ./another-dungeon-crawler.sh
 
-set -u
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 ###################
 # TERMINAL SETUP

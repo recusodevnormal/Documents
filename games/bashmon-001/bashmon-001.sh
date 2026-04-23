@@ -2,8 +2,17 @@
 
 # Bashmon: TUI Monster Tamer
 # A monster-catching RPG in pure Bash
+#
+# DEPENDENCIES: bash, tput, stty
+#               All standard GNU/Unix utilities. No network access.
+#
+# USAGE:  chmod +x bashmon-001.sh && ./bashmon-001.sh
 
-set -e
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 # Terminal setup
 setup_terminal() {

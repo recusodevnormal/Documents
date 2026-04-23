@@ -11,6 +11,12 @@
 # https://github.com/wolandark
 # https://github.com/wolandark/BASH_Scripts_For_Everyone
 
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
+
 ex ()
 {
   if [ -f "$1" ] ; then

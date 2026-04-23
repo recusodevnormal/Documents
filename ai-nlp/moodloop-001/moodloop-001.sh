@@ -5,13 +5,20 @@
 # A real-time sentiment analyzer that monitors stdin or a log file
 # and adjusts its mood/persona based on positive vs negative tokens
 #
+# DEPENDENCIES: bash, grep, tr, awk, printf, clear
+#               All standard GNU/Unix utilities. No network access.
+#
 # Usage:
 #   ./mood_loop.sh                    # Interactive mode (type messages)
 #   ./mood_loop.sh <logfile>          # Monitor existing log file
 #   tail -f app.log | ./mood_loop.sh  # Pipe from stream
 ################################################################################
 
-set -o pipefail
+# ---------------------------------------------------------------------------
+# STRICT MODE — catch errors early
+# ---------------------------------------------------------------------------
+set -euo pipefail
+IFS=$'\n\t'
 
 ################################################################################
 # CONFIGURATION

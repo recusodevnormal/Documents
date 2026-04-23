@@ -12,6 +12,7 @@
 #          ./file_deleter_by_name.sh FabFilter ~/Downloads --dry-run
 
 set -euo pipefail
+IFS=$'\n\t'
 
 # Parse arguments
 SEARCH_TERM="${1:-FabFilter}"
